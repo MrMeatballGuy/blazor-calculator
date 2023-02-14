@@ -1,4 +1,5 @@
 ﻿@page "/calculator"
+@inject ICustomMath customMath
 
 <h1>Basic Calculator Demo Using Blazor</h1>
 <hr />
@@ -59,12 +60,7 @@
     string num1;
     string num2;
     string finalresult;
-    private ICustomMath customMath;
 
-    protected override void OnInitialized()
-    {
-        customMath = new CustomMath();
-    }
     void AddNumbers()
     {   
         try

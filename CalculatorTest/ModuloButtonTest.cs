@@ -1,7 +1,9 @@
 ﻿using AngleSharp.Diffing.Extensions;
 using AngleSharp.Dom;
+using BlazorCalculator;
 using BlazorCalculator.Pages;
 using Bunit;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,7 @@ namespace CalculatorTest
         public ModuloButtonTest()
         {
             this.ctx = new TestContext();
+            this.ctx.Services.AddScoped<ICustomMath, CustomMath>();
             this.calculatorComponent = ctx.RenderComponent<Calculator>();
             this.inputOne = calculatorComponent.Find("#first-num");
             this.inputTwo = calculatorComponent.Find("#second-num");

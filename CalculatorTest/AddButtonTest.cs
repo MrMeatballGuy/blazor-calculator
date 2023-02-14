@@ -3,8 +3,10 @@ using System.Diagnostics.Metrics;
 using Bunit;
 using AngleSharp.Diffing.Extensions;
 using AngleSharp.Dom;
+using Microsoft.Extensions.DependencyInjection;
+using BlazorCalculator;
 
-namespace CalculatorTests
+namespace CalculatorTest
 {
     public class AddButtonTest
     {
@@ -15,6 +17,7 @@ namespace CalculatorTests
         private IElement resultInput;
         public AddButtonTest() {
             this.ctx = new TestContext();
+            this.ctx.Services.AddScoped<ICustomMath, CustomMath>();
             this.calculatorComponent = ctx.RenderComponent<Calculator>();
             this.inputOne = calculatorComponent.Find("#first-num");
             this.inputTwo = calculatorComponent.Find("#second-num");
