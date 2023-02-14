@@ -1,4 +1,5 @@
 ﻿@page "/calculator"
+@inject ICustomMath customMath
 
 <h1>Basic Calculator Demo Using Blazor</h1>
 <hr />
@@ -50,27 +51,88 @@
     string num1;
     string num2;
     string finalresult;
+
     void AddNumbers()
-    {
-        finalresult = (Convert.ToDouble(num1) + Convert.ToDouble(num2)).ToString();
+    {   
+        try
+        {
+            finalresult = customMath.AddNumbers(Convert.ToDouble(num1), Convert.ToDouble(num2)).ToString();
+        }
+        catch (Exception ex)
+        {
+            finalresult = ex.Message;
+        }
     }
+
     void SubtractNumbers()
     {
-        finalresult = (Convert.ToDouble(num1) - Convert.ToDouble(num2)).ToString();
+
+        try
+        {
+            finalresult = customMath.SubtractNumbers(Convert.ToDouble(num1), Convert.ToDouble(num2)).ToString();
+        }
+        catch (Exception ex)
+        {
+            finalresult = ex.Message;
+        }
     }
+
     void MultiplyNumbers()
     {
-        finalresult = (Convert.ToDouble(num1) * Convert.ToDouble(num2)).ToString();
-    }
+        try
+        {
+            finalresult = customMath.MultiplyNumbers(Convert.ToDouble(num1), Convert.ToDouble(num2)).ToString();
+        }
+        catch (Exception ex)
+        {
+            finalresult = ex.Message;
+        }
+}
+    
     void DivideNumbers()
     {
-        if (Convert.ToDouble(num2) != 0)
+        try
         {
-            finalresult = (Convert.ToDouble(num1) / Convert.ToDouble(num2)).ToString();
+            finalresult = customMath.DivideNumbers(Convert.ToDouble(num1), Convert.ToDouble(num2)).ToString();
         }
-        else
+        catch (Exception ex)
         {
-            finalresult = "Cannot Divide by Zero";
+            finalresult = ex.Message;
         }
     }
+
+    void GetPercentage()
+    {
+
+        try
+        {
+            finalresult = customMath.GetPercentage(Convert.ToDouble(num1), Convert.ToDouble(num2)).ToString();
+        }
+        catch (Exception ex)
+        {
+            finalresult = ex.Message;
+        }
+        
+    }
+    
+    void GetModulo()
+    {
+
+        try
+        {
+            finalresult = customMath.GetModulo(Convert.ToDouble(num1), Convert.ToDouble(num2)).ToString();
+        }
+        catch (Exception ex)
+        {
+            finalresult = ex.Message;
+        }
+    }
+
+    void ClearAll()
+    {
+        num1 = "";
+        num2 = "";
+        finalresult = "";
+    }
+
 }

@@ -1,19 +1,23 @@
-﻿using BlazorCalculator.Pages;
-using System.Diagnostics.Metrics;
-using Bunit;
-using AngleSharp.Diffing.Extensions;
+﻿using AngleSharp.Diffing.Extensions;
 using AngleSharp.Dom;
+using BlazorCalculator.Pages;
+using Bunit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CalculatorTests
+namespace CalculatorTest
 {
-    public class DivideButtonTest
+    public class PercentageButtonTest
     {
         private TestContext ctx;
         private IRenderedComponent<Calculator> calculatorComponent;
         private IElement inputOne;
         private IElement inputTwo;
         private IElement resultInput;
-        public DivideButtonTest()
+        public PercentageButtonTest()
         {
             this.ctx = new TestContext();
             this.calculatorComponent = ctx.RenderComponent<Calculator>();
@@ -27,32 +31,33 @@ namespace CalculatorTests
         [InlineData(0, 1)]
         [InlineData(1, 1)]
         [InlineData(1, -1)]
-        public void TestDivideButtonSuccess(int firstNumber, int secondNumber)
+        [InlineData(1, 0)]
+        [InlineData(0, 0)]
+        public void TestModuloButtonSuccess(int firstNumber, int secondNumber)
         {
             // Arrange
-            var expectedResult = firstNumber / secondNumber;
+            var expectedResult = secondNumber / firstNumber * 100;
 
             inputOne.Change(firstNumber);
             inputTwo.Change(secondNumber);
 
-            var btn = calculatorComponent.Find("#divide-btn");
+            var btn = calculatorComponent.Find("#pct-btn");
             btn.Click();
 
             string output = "";
             resultInput.TryGetAttrValue("value", out output);
 
             // Assert
-            Assert.Equal(expectedResult, Convert.ToDouble(output));
+            Assert.Equal(expectedResult, Convert.ToInt32(output));
         }
 
         [Theory]
         [InlineData("a", "b")]
-        public void TestDivideButtonFail(string firstNumber, string secondNumber)
+        public void TestAddButtonFail(string firstNumber, string secondNumber)
         {
             inputOne.Change(firstNumber);
             inputTwo.Change(secondNumber);
-
-            var btn = calculatorComponent.Find("#divide-btn");
+            var btn = calculatorComponent.Find("#pct-btn");
 
             // Assert
             Assert.Throws<FormatException>(() =>
@@ -60,25 +65,6 @@ namespace CalculatorTests
                 btn.Click();
             });
         }
-
-        [Theory]
-        [InlineData(1, 0)]
-        public void TestDivideByZeroFail(int firstNumber, int secondNumber)
-        {
-            // Arrange
-            string expectedResult = "Cannot Divide by Zero";
-
-            inputOne.Change(firstNumber);
-            inputTwo.Change(secondNumber);
-
-            var btn = calculatorComponent.Find("#divide-btn");
-            btn.Click();
-
-            string output = "";
-            resultInput.TryGetAttrValue("value", out output);
-
-            // Assert
-            Assert.Equal(expectedResult, output);
-        }
     }
 }
+
