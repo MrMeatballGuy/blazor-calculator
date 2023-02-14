@@ -33,7 +33,7 @@ namespace CalculatorTest
         [InlineData(1, -1)]
         [InlineData(1, 0)]
         [InlineData(0, 0)]
-        public void TestModuloButtonSuccess(int firstNumber, int secondNumber)
+        public void TestPercentageButtonSuccess(int firstNumber, int secondNumber)
         {
             // Arrange
             var expectedResult = secondNumber / firstNumber * 100;
@@ -58,12 +58,14 @@ namespace CalculatorTest
             inputOne.Change(firstNumber);
             inputTwo.Change(secondNumber);
             var btn = calculatorComponent.Find("#pct-btn");
+            string expectedResult = "Input string was not in a correct format.";
+            btn.Click();
+
+            string output = "";
+            resultInput.TryGetAttrValue("value", out output);
 
             // Assert
-            Assert.Throws<FormatException>(() =>
-            {
-                btn.Click();
-            });
+            Assert.Equal(expectedResult, output);
         }
     }
 }

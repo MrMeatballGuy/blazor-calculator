@@ -49,16 +49,20 @@ namespace CalculatorTests
         [InlineData("a", "b")]
         public void TestDivideButtonFail(string firstNumber, string secondNumber)
         {
+            string expectedResult = "Input string was not in a correct format.";
+
             inputOne.Change(firstNumber);
             inputTwo.Change(secondNumber);
 
             var btn = calculatorComponent.Find("#divide-btn");
 
+            btn.Click();
+
+            string output = "";
+            resultInput.TryGetAttrValue("value", out output);
+
             // Assert
-            Assert.Throws<FormatException>(() =>
-            {
-                btn.Click();
-            });
+            Assert.Equal(expectedResult, output);
         }
 
         [Theory]

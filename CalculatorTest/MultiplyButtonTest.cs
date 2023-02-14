@@ -55,12 +55,15 @@ namespace CalculatorTests
             inputTwo.Change(secondNumber);
 
             var btn = calculatorComponent.Find("#multiply-btn");
+            string expectedResult = "Input string was not in a correct format.";
+            btn.Click();
+
+            string output = "";
+            resultInput.TryGetAttrValue("value", out output);
 
             // Assert
-            Assert.Throws<FormatException>(() =>
-            {
-                btn.Click();
-            });
+            Assert.Equal(expectedResult, output);
+            
         }
     }
 }

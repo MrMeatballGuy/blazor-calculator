@@ -49,8 +49,8 @@ namespace CalculatorTest
             resultInput.TryGetAttrValue("value", out outputResultValue);
 
             // Assert
-            Assert.Equal(expectedResult, inputOneValue);
             Assert.Equal(expectedResult, inputTwoValue);
+            Assert.Equal(expectedResult, inputOneValue);
             Assert.Equal(expectedResult, outputResultValue);
         }
     }

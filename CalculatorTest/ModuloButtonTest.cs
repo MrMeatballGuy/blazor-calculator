@@ -27,14 +27,14 @@ namespace CalculatorTest
         }
 
         [Theory]
-        [InlineData(2, 4)]
-        [InlineData(3, 4)]
-        [InlineData(4, 4)]
+        [InlineData(4, 2)]
+        [InlineData(4, 3)]
+        [InlineData(4, 8)]
         
-        public void TestModuloButtonSuccess(int firstNumber, int secondNumber)
+        public void TestModuloButtonSuccess(double firstNumber, double secondNumber)
         {
             // Arrange
-            var expectedResult = secondNumber % firstNumber;
+            var expectedResult = firstNumber % secondNumber;
 
             inputOne.Change(firstNumber);
             inputTwo.Change(secondNumber);
@@ -57,11 +57,14 @@ namespace CalculatorTest
             inputTwo.Change(secondNumber);
             var btn = calculatorComponent.Find("#mod-btn");
 
+            string expectedResult = "Input string was not in a correct format.";
+            btn.Click();
+
+            string output = "";
+            resultInput.TryGetAttrValue("value", out output);
+
             // Assert
-            Assert.Throws<FormatException>(() =>
-            {
-                btn.Click();
-            });
+            Assert.Equal(expectedResult, output);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿@page "/calculator"
-@inject ICustomMath customMath
 
 <h1>Basic Calculator Demo Using Blazor</h1>
 <hr />
@@ -44,6 +43,15 @@
         <div class="col-md-2">
             <button id="divide-btn" @onclick="DivideNumbers" class="btn btn-info">Divide (/)</button>
         </div>
+        <div class="col-md-2">
+            <button id="pct-btn" @onclick="GetPercentage" class="btn btn-info">Percentage (/)</button>
+        </div>
+        <div class="col-md-2">
+            <button id="mod-btn" @onclick="GetModulo" class="btn btn-info">Modulo (/)</button>
+        </div>
+        <div class="col-md-2">
+            <button id="clr-btn" @onclick="ClearAll" class="btn btn-info">Clear (/)</button>
+        </div>
     </div>
 </div>
 
@@ -51,7 +59,12 @@
     string num1;
     string num2;
     string finalresult;
+    private ICustomMath customMath;
 
+    protected override void OnInitialized()
+    {
+        customMath = new CustomMath();
+    }
     void AddNumbers()
     {   
         try

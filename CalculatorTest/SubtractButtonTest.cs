@@ -56,11 +56,14 @@ namespace CalculatorTests
 
             var btn = calculatorComponent.Find("#subtract-btn");
 
+            string expectedResult = "Input string was not in a correct format.";
+            btn.Click();
+
+            string output = "";
+            resultInput.TryGetAttrValue("value", out output);
+
             // Assert
-            Assert.Throws<FormatException>(() =>
-            {
-                btn.Click();
-            });
+            Assert.Equal(expectedResult, output);
         }
     }
 }
